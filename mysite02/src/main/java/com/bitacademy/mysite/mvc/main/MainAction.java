@@ -6,7 +6,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.bitacademy.mysite.vo.UserVo;
 import com.bitacademy.web.mvc.Action;
 import com.bitacademy.web.util.WebUtil;
 
@@ -39,6 +41,10 @@ public class MainAction implements Action {
 		cookie.setMaxAge(24*60*60); // 만료기간 1day
 		response.addCookie(cookie);
 		
+//		// 로그인 되어있는지 안 되어있는지 확인!! 만들지 말고 세션을 받아와야함!!
+//		HttpSession session = request.getSession(false);
+//		UserVo authUser = session.getAttribute("authUser"); //유저 이름은 일치해야함!!
+//		
 		WebUtil.forward(request, response, "/WEB-INF/views/main/index.jsp");
 
 	}

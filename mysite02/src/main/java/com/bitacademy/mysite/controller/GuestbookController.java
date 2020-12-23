@@ -21,6 +21,7 @@ public class GuestbookController extends HttpServlet {
 		//액션 패팩토리는 추상클래스
 //		ActionFactory actionFactory = new GuestbookActionFactory();
 //		Action action = actionFactory.getAction(actionName);
+//      action.execute(request, response);
 	}
 
 
