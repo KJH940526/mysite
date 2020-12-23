@@ -83,12 +83,17 @@ public class GuestbookRepository {
 					" values(null, ?, ?, ?, now())";
 			pstmt = conn.prepareStatement(sql);
 			
+//			System.out.println("GuestBookRepository Insert: 바인딩 전 " +pstmt);
+//			System.out.println("GuestBookRepository Insert: " + vo.getName());
+//			System.out.println("GuestBookRepository Insert: " + vo.getPassword());
+//			System.out.println("GuestBookRepository Insert: " + vo.getMessage());
+			
 			// 4. 바인딩
 			pstmt.setString(1, vo.getName());
 			pstmt.setString(2, vo.getPassword());
 			pstmt.setString(3, vo.getMessage());
-			// now는 일단 셋을 하지말아봐!~!
 			
+//			System.out.println("GuestBookRepository Insert: 바인딩 후 " +pstmt);
 			// 5. sql문 실행
 			int count = pstmt.executeUpdate();
 			

@@ -32,8 +32,7 @@ public class GuestbookVo {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
+
 	public String getMessage() {
 		return message;
 	}
