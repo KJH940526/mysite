@@ -12,41 +12,24 @@ public class GuestbookActionFactory extends ActionFactory {
 		Action action = null;
 		
 		if("add".equals(actionName)) {
-//			System.out.println("GuestBookActionFactory ADD");
+			System.out.println("GuestBookActionFactory" + actionName);
 			action = new AddAction();
+			
+		} else if("delete".equals(actionName)) {
+			System.out.println("GuestBookActionFactory" + actionName);
+			action = new DeleteAction();		
+		} else if("deleteform".equals(actionName)) {
+			System.out.println("GuestBookActionFactory" + actionName);
+			action = new DeleteFormAction();
 		} else {
+			System.out.println("GuestBookActionFactory" + actionName);
 			action = new GuestAction();
 		}
-		
-		
 		return action;
 
 	}
 
 }
 
-/*
-	else if ("delete".equals(actionName)) {
-	
-	String no = (String)request.getAttribute("no");
-	String password = request.getParameter("password");
-	GuestbookVo vo = new GuestbookVo();
-	vo.setNo(Long.parseLong(no));
-	vo.setPassword(password);
-	new GuestbookDao().delete(vo);
-	response.sendRedirect(request.getContextPath() + "/gb");
-	
 
-} else if ("deleteform".equals(actionName)) {
-	RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/deleteform.jsp");
-	rd.forward(request, response);
 	
-		
-} else {
-	
-
-}
-response.setContentType("text/html; charset=utf-8");
-
-}
-*/

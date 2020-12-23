@@ -93,7 +93,7 @@ public class GuestbookRepository {
 			pstmt.setString(2, vo.getPassword());
 			pstmt.setString(3, vo.getMessage());
 			
-//			System.out.println("GuestBookRepository Insert: 바인딩 후 " +pstmt);
+			System.out.println("GuestBookRepository Insert: 바인딩 후 " +pstmt);
 			// 5. sql문 실행
 			int count = pstmt.executeUpdate();
 			
