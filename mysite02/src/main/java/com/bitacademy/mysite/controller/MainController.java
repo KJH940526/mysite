@@ -14,9 +14,22 @@ import com.bitacademy.web.mvc.ActionFactory;
 public class MainController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	@Override
+	public void init() throws ServletException{
+		String configPath = getServletConfig().getInitParameter("config");
+		System.out.println("init() called: " + configPath);
+		super.init();
+	}
+	
+	@Override
+	protected void service(HttpServletRequest arg0, HttpServletResponse arg1) throws ServletException, IOException {
+		System.out.println("service() called");
+		super.service(arg0, arg1);
+	}
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		request.setCharacterEncoding("utf-8");
+		System.out.println("doGet() called");
+
 		String actionName = request.getParameter("a");		
 
 		ActionFactory actionFactory = new MainActionFactory();
@@ -26,5 +39,11 @@ public class MainController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
+	}
+	
+	@Override
+	public void destroy() {
+		System.out.println("destroy() called!!!!!!!!!");
+		super.destroy();
 	}
 }

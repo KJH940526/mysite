@@ -17,7 +17,6 @@ public class UserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
 		
 		// actionName.equlas("joinform")인 이유는 actionName이 null일 수가 있기 때문에!!
 		// 아래방법은 없으면 빈스트링이 나옴!!
