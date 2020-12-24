@@ -22,7 +22,9 @@ public class UserActionFactory extends ActionFactory {
 			action = new JoinSuccessAction();
 		} else if("loginform".equals(actionName)) {
 			action = new LoginformAction();
-		} else {  //이상한 주소가 들어왔을때!!  user?sad213 이런주소!! user?가 정의안한 url 주소
+		} else if("updateform".equals(actionName)){
+			action = new UpdateformAction();
+		}else {  //이상한 주소가 들어왔을때!!  user?sad213 이런주소!! user?가 정의안한 url 주소		
 			action = new MainAction();
 		}
 		
