@@ -12,24 +12,27 @@ import com.bitacademy.mysite.vo.UserVo;
 import com.bitacademy.web.mvc.Action;
 import com.bitacademy.web.util.WebUtil;
 
-public class UpdateformAction implements Action {
+public class UpdateAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 1. 세션에서 authUser 가져오기
 		HttpSession session = request.getSession();
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		System.out.println(authUser);
 		
-		// 2. authUser에서 no 가져오기
-		System.out.println(authUser.getNo());
-		// 3. no를 가지고 Repository를 통해 UserVo 가져오기!
-		UserVo userVo = new UserRepository().findNo(authUser.getNo());
-		System.out.println("updateformAction : "+userVo);
-		request.setAttribute("vo", userVo);
+		String name = request.getParameter("name");
+		String password = request.getParameter("password");
+		String gender = request.getParameter("gender");
 		
-		// 4. jsp로 UserVo 전달하면서 FORWADING 하기
-		WebUtil.forward(request, response, "/WEB-INF/views/user/updateform.jsp");
+		UserVo vo = new UserVo();
+		vo.setNo(authUser.getNo());
+		vo.setName(name);
+		vo.setPassword(password);
+		vo.setGender(gender);
+		
+		new UserRepository().update(vo);
+		
+		WebUtil.redirect(request, response, request.getContextPath()+ "/user?a=updateform" );
+
 	}
 
 }

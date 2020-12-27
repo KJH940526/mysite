@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 import com.bitacademy.web.mvc.Action;
 import com.bitacademy.web.util.WebUtil;
 
-public class LotgoutAction implements Action {
+public class LogoutAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -17,17 +17,18 @@ public class UserActionFactory extends ActionFactory {
 		} else if("login".equals(actionName)) {
 			action = new LoginAction();
 		} else if("logout".equals(actionName)) {
-			action = new LotgoutAction();
+			action = new LogoutAction();
 		} else if("joinsuccess".equals(actionName)) {
 			action = new JoinSuccessAction();
 		} else if("loginform".equals(actionName)) {
 			action = new LoginformAction();
-		} else if("updateform".equals(actionName)){
+		} else if("updateform".equals(actionName)) {
 			action = new UpdateformAction();
-		}else {  //이상한 주소가 들어왔을때!!  user?sad213 이런주소!! user?가 정의안한 url 주소		
+		} else if("update".equals(actionName)) {
+			action = new UpdateAction();
+		} else {
 			action = new MainAction();
 		}
-		
 		
 		return action;
 	}
