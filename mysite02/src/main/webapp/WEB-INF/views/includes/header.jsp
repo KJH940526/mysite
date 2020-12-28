@@ -19,7 +19,7 @@
 				</li>
 				<li><a href="${pageContext.request.contentType }/mysite02/user?a=logout">로그아웃</a>
 				</li>
-				<li>${sessionScope.authUser.name }님안녕하세요 ^^;</li>
+				<li>어스유저 name ${sessionScope.authUser.name } 어스유저 no${sessionScope.authUser.no }님안녕하세요 ^^;</li>
 			</c:otherwise>
 		</c:choose>
 

@@ -13,6 +13,7 @@ import com.bitacademy.mysite.vo.GuestbookVo;
 
 
 public class GuestbookRepository {
+	
 	public List<GuestbookVo> findAll() {
 		List<GuestbookVo> list = new ArrayList<>();
 
@@ -41,7 +42,7 @@ public class GuestbookRepository {
 				vo.setNo(no);
 				vo.setName(name);
 				vo.setMessage(message);
-				vo.setRegDate(reqDate);	
+				vo.setReqDate(reqDate);	
 				
 				list.add(vo);
 			}

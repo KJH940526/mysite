@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import com.bitacademy.mysite.vo.UserVo;
 
 public class UserRepository {
-
+	
 	public UserVo findNo(Long userVoNo) {
 		System.out.println("findNo");
 		System.out.println("findNo userVoNo : " + userVoNo);
