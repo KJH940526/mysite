@@ -9,58 +9,49 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.bitacademy.mysite.vo.BoardVo;
-import com.bitacademy.mysite.vo.UserVo;
 
 public class BoardRepository {
-
-	public BoardVo findNo(Long BoardVoNo) {
-		BoardVo boardVo = null;
+  
+	//
+	public BoardVo findByNo(Long boardNo) {
+		BoardVo vo = null;
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-
 		try {
 			conn = getConnection();
 
 			// 3. SQL 준비
-			String sql = 
-					  "select a.no, a.title, date_format(a.req_date, '%Y-%m-%d') as req_date, a.hit, b.name, a.group_no, a.order_no, a.depth, a.user_no"
-					+ "   from board a, user b" 
-					+ "  where a.user_no = b.no"
-					+ " and b.no = ?";
-
+			String sql = " select title, contents, no, user_no, hit, group_no, depth, order_no" + " from board b" + " where no=?";
 			pstmt = conn.prepareStatement(sql);
 
 			// 4. 바인딩
-			pstmt.setLong(1, BoardVoNo);
+			pstmt.setLong(1, boardNo);
 
 			// 5. sql문 실행
 			rs = pstmt.executeQuery();
 
 			// 6. 데이터 가져오기
 			if (rs.next()) {
-				Long no = rs.getLong(1);
-				String title = rs.getString(2);
-				String reqDate = rs.getString(3);
-				Long hit = rs.getLong(4);
-				String userName = rs.getString(5);
+				String title = rs.getString(1);
+				String contents = rs.getString(2);
+				Long no = rs.getLong(3);
+				Long userNo = rs.getLong(4);
+				Long hit = rs.getLong(5);
 				Long groupNo = rs.getLong(6);
-				int orderNo = rs.getInt(7);
-				int depth = rs.getInt(8);
-				Long userNo = rs.getLong(9);
+				int depth = rs.getInt(7);
+				int orderNo = rs.getInt(8);
 
-				boardVo = new BoardVo();
-				boardVo.setNo(no);
-				boardVo.setTitle(title);
-				boardVo.setReqDate(reqDate);
-				boardVo.setHit(hit);
-				boardVo.setUserName(userName);
-				boardVo.setGroupNo(groupNo);
-				boardVo.setOrderNo(orderNo);
-				boardVo.setDepth(depth);
-				boardVo.setUserNo(userNo);
-				
+				vo = new BoardVo();
+				vo.setTitle(title);
+				vo.setContents(contents);
+				vo.setNo(no);
+				vo.setUserNo(userNo);
+				vo.setHit(hit);
+				vo.setGroupNo(groupNo);
+				vo.setDepth(depth);
+				vo.setOrderNo(orderNo);
 			}
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
@@ -80,10 +71,10 @@ public class BoardRepository {
 				e.printStackTrace();
 			}
 		}
-
-		return boardVo;
+		return vo;
 	}
 	
+	//글쓰기
 	public boolean insert(BoardVo boardVo) {
 		System.out.println("BoardRepository Insert: " + boardVo);
 		boolean result = false;
@@ -134,6 +125,7 @@ public class BoardRepository {
 		return result;
 	}
 	
+	// 글삭제
 	public boolean delete(BoardVo boardVo) {
 		boolean result = false;
 		Connection conn = null;
@@ -176,6 +168,7 @@ public class BoardRepository {
 		return result;
 	}
 
+	//글보기				//글 수를 받아고?
 	public List<BoardVo> findAll() {
 		List<BoardVo> list = new ArrayList<>();
 
@@ -183,6 +176,7 @@ public class BoardRepository {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
+		//글수를 나누고 바인딩 해줘야한다?
 		try {
 			conn = getConnection();
 
