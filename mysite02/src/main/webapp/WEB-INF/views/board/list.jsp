@@ -44,15 +44,15 @@
 						<td>${vo.hit }</td>
 						<td>${vo.reqDate }</td>
 						
-						<!--  지울꺼임 -->
+						<!-- 
 						<td>${vo.depth } 깊이</td>
-						
-						<!--  -->
+						 -->
+
 						<c:choose>
 							<c:when test="${vo.userNo == sessionScope.authUser.no }">
 							<td><a href="${ pageContext.request.contextPath}/board?a=delete&no=${vo.no}&name=${vo.userName}" class="del">삭제</a></td>
 							</c:when>
-							<c:otherwise><td><a>${vo.no} // ${vo.userName }// ${sessionScope.authUser.name } // <!-- ${vo } --></a></td></c:otherwise>
+							<c:otherwise><td><a><!-- ${vo.no} // ${vo.userName }// ${sessionScope.authUser.name } //  --><!-- ${vo } --></a></td></c:otherwise>
 						</c:choose>
 						
 						
