@@ -11,8 +11,7 @@ import java.util.List;
 import com.bitacademy.mysite.vo.BoardVo;
 
 public class BoardRepository {
-  
-	//
+
 	public BoardVo findByNo(Long boardNo) {
 		BoardVo vo = null;
 
@@ -23,7 +22,8 @@ public class BoardRepository {
 			conn = getConnection();
 
 			// 3. SQL 준비
-			String sql = " select title, contents, no, user_no, hit, group_no, depth, order_no" + " from board b" + " where no=?";
+			String sql = " select title, contents, no, user_no, hit, group_no, depth, order_no" + " from board b"
+					+ " where no=?";
 			pstmt = conn.prepareStatement(sql);
 
 			// 4. 바인딩
@@ -74,22 +74,72 @@ public class BoardRepository {
 		return vo;
 	}
 	
-	//글쓰기
+	public BoardVo update(Long boardNo) {
+		BoardVo vo = null;
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = getConnection();
+
+			// 3. SQL 준비
+			String sql = " select title, contents, no, user_no, hit, group_no, depth, order_no" + " from board b"
+					+ " where no=?";
+			pstmt = conn.prepareStatement(sql);
+
+			// 4. 바인딩
+			pstmt.setLong(1, boardNo);
+
+			// 5. sql문 실행
+			rs = pstmt.executeQuery();
+
+			// 6. 데이터 가져오기
+			if (rs.next()) {
+				String title = rs.getString(1);
+				String contents = rs.getString(2);
+
+				vo = new BoardVo();
+				vo.setTitle(title);
+				vo.setContents(contents);
+			}
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} finally {
+			try {
+				// 3. 자원정리
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return vo;
+	}
+
+	// 글쓰기
 	public boolean insert(BoardVo boardVo) {
 		System.out.println("BoardRepository Insert: " + boardVo);
 		boolean result = false;
-		
+
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		
+
 		try {
 			conn = getConnection();
-			
-			// --   					no  , title, contents,date, h, gno,ono,depth,userno 
-			// insert into board values(null, '제목1','콘텐츠1',now(), 1, 1,  1,   1,    1);
+
+			// -- no , title, contents,date, h, gno,ono,depth,userno
+			// insert into board values(null, '제목1','콘텐츠1',now(), 1, 1, 1, 1, 1);
 			String sql = "insert into board values(null, ?, ?,now(), ?, ?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
-			
+
 			// 4. 바인딩
 			pstmt.setString(1, boardVo.getTitle());
 			pstmt.setString(2, boardVo.getContents());
@@ -98,14 +148,14 @@ public class BoardRepository {
 			pstmt.setInt(5, boardVo.getOrderNo());
 			pstmt.setInt(6, boardVo.getDepth());
 			pstmt.setLong(7, boardVo.getUserNo());
-			
+
 			System.out.println("======================================");
-			System.out.println("BoardRepository Insert: 바인딩 후 " +pstmt);
-			
+			System.out.println("BoardRepository Insert: 바인딩 후 " + pstmt);
+
 			int count = pstmt.executeUpdate();
 
 			result = count == 1;
-			
+
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
 		} finally {
@@ -121,10 +171,10 @@ public class BoardRepository {
 				e.printStackTrace();
 			}
 		}
-				
+
 		return result;
 	}
-	
+
 	// 글삭제
 	public boolean delete(BoardVo boardVo) {
 		boolean result = false;
@@ -132,43 +182,96 @@ public class BoardRepository {
 		PreparedStatement pstmt = null;
 		try {
 			conn = getConnection();
-			
+
 			// 3. SQL 준비
-			String sql =
-					" delete" +
-					" from board" +
-					" where no = ?";
+			String sql = " delete" + " from board" + " where no = ?";
 			pstmt = conn.prepareStatement(sql);
-			
+
 			// 4. 바인딩
 			pstmt.setLong(1, boardVo.getNo());
-			
+
 			// 5. sql문 실행
 			System.out.println(pstmt.executeUpdate());
 			int count = pstmt.executeUpdate();
-			
+
 			result = count == 1;
-			
+
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
 		} finally {
 			try {
 				// 3. 자원정리
-				if(pstmt != null) {
+				if (pstmt != null) {
 					pstmt.close();
 				}
-				if(conn != null) {
+				if (conn != null) {
 					conn.close();
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
-		
+
 		return result;
 	}
 
-	//글보기				//글 수를 받아고?
+//	// 글보기
+//	public List<BoardVo> viewContents(Long boardNo) {
+//		System.out.println(boardNo);
+//		List<BoardVo> list = new ArrayList<>();
+//
+//		Connection conn = null;
+//		PreparedStatement pstmt = null;
+//		ResultSet rs = null;
+//
+//		try {
+//			conn = getConnection();
+//
+//			String sql = " select no, title, contents" + " from board" + " where no = ?";
+//
+//			pstmt = conn.prepareStatement(sql);
+//			pstmt.setLong(1, boardNo);
+//
+//			System.out.println(pstmt);
+//
+//			rs = pstmt.executeQuery();
+//
+//			while (rs.next()) {
+//				Long no = rs.getLong(1);
+//				String title = rs.getString(2);
+//				String contents = rs.getString(3);
+//
+//				BoardVo vo = new BoardVo();
+//				vo.setNo(no);
+//				vo.setTitle(title);
+//				vo.setContents(contents);
+//
+//				list.add(vo);
+//				System.out.println(vo);
+//			}
+//
+//		} catch (SQLException e) {
+//			System.out.println("error:" + e);
+//		} finally {
+//			try {
+//				// 3. 자원정리
+//				if (rs != null) {
+//					rs.close();
+//				}
+//				if (pstmt != null) {
+//					pstmt.close();
+//				}
+//				if (conn != null) {
+//					conn.close();
+//				}
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		return list;
+//	}
+
+	// 리스트 //글 수를 받아고?
 	public List<BoardVo> findAll() {
 		List<BoardVo> list = new ArrayList<>();
 
@@ -176,7 +279,7 @@ public class BoardRepository {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
-		//글수를 나누고 바인딩 해줘야한다?
+		// 글수를 나누고 바인딩 해줘야한다?
 		try {
 			conn = getConnection();
 

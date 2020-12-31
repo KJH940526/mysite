@@ -33,7 +33,7 @@
 						<td>${count-status.index }</td>
 						<c:choose>
 							<c:when test="${vo.depth == 1 }">
-								<td style='text-align:left; padding-left:${(vo.depth-1)*20}px'><a href="">${vo.title }</a></td>
+								<td style='text-align:left; padding-left:${(vo.depth-1)*20}px'><a href="${ pageContext.request.contextPath}/board?a=view&no=${vo.no}">${vo.title }</a></td>
 							</c:when>
 						
 							<c:otherwise>
@@ -52,7 +52,7 @@
 							<c:when test="${vo.userNo == sessionScope.authUser.no }">
 							<td><a href="${ pageContext.request.contextPath}/board?a=delete&no=${vo.no}&name=${vo.userName}" class="del">삭제</a></td>
 							</c:when>
-							<c:otherwise><td><a>${vo.no} // ${vo.userName }// ${sessionScope.authUser.name }</a></td></c:otherwise>
+							<c:otherwise><td><a>${vo.no} // ${vo.userName }// ${sessionScope.authUser.name } // <!-- ${vo } --></a></td></c:otherwise>
 						</c:choose>
 						
 						
