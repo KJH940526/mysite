@@ -74,43 +74,34 @@ public class BoardRepository {
 		return vo;
 	}
 	
-	public BoardVo update(Long boardNo) {
-		BoardVo vo = null;
+	public boolean update(BoardVo boardVo) {
+		System.out.println("BoardRepository Insert: " + boardVo);
+		boolean result = false;
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
+
 		try {
 			conn = getConnection();
 
-			// 3. SQL 준비
-			String sql = " select title, contents, no, user_no, hit, group_no, depth, order_no" + " from board b"
-					+ " where no=?";
+			// -- no , title, contents,date, h, gno,ono,depth,userno
+			String sql = "update board set title = ?, contents = ? where no = ?;";
 			pstmt = conn.prepareStatement(sql);
 
 			// 4. 바인딩
-			pstmt.setLong(1, boardNo);
+			pstmt.setString(1, boardVo.getTitle());
+			pstmt.setString(2, boardVo.getContents());
+			pstmt.setLong(3, boardVo.getNo());
 
-			// 5. sql문 실행
-			rs = pstmt.executeQuery();
+			int count = pstmt.executeUpdate();
 
-			// 6. 데이터 가져오기
-			if (rs.next()) {
-				String title = rs.getString(1);
-				String contents = rs.getString(2);
+			result = count == 1;
 
-				vo = new BoardVo();
-				vo.setTitle(title);
-				vo.setContents(contents);
-			}
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
 		} finally {
 			try {
 				// 3. 자원정리
-				if (rs != null) {
-					rs.close();
-				}
 				if (pstmt != null) {
 					pstmt.close();
 				}
@@ -121,9 +112,9 @@ public class BoardRepository {
 				e.printStackTrace();
 			}
 		}
-		return vo;
-	}
 
+		return result;
+	}
 	// 글쓰기
 	public boolean insert(BoardVo boardVo) {
 		System.out.println("BoardRepository Insert: " + boardVo);

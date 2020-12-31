@@ -20,24 +20,25 @@ public class UpdateAction implements Action {
 		HttpSession session = request.getSession();
 		UserVo authUser = (UserVo) session.getAttribute("authUser");
 		
+		System.out.println("업데이트 액션");
+		
 		if (authUser != null) {
 			//업데이트용
+			System.out.println("authUser : " + authUser);
 			String title = request.getParameter("title");
 			String content = request.getParameter("content");
-			
-			//확인용
-			String userName = request.getParameter("name");
 			long no = Long.parseLong(request.getParameter("no"));
-			
+		
 			BoardVo vo = new BoardVo();
 			vo.setTitle(title);
 			vo.setContents(content);
-			vo.setUserName(userName);
 			vo.setNo(no);
 			
-//			new BoardRepository();
+			System.out.println("updateAction : " + vo);
+			new BoardRepository().update(vo);
 			
 		}
+		System.out.println("글수정");
 		WebUtil.redirect(request, response, request.getContextPath() + "/board");
 		
 
