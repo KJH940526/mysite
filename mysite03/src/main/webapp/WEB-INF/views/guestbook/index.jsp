@@ -3,7 +3,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%pageContext.setAttribute("newline", "\n");%>
+<%
+	pageContext.setAttribute("newline", "\n");
+%>
 
 <!DOCTYPE html>
 <html>
@@ -19,9 +21,8 @@
 		<div id="content">
 			<div id="guestbook">
 
-				<form action="${pageContext.request.contextPath}/guestbook"
+				<form action="${pageContext.request.contextPath}/guestbook/add"
 					method="post">
-					<input type="hidden" name="a" value="add">
 					<table>
 						<tr>
 							<td>이름</td>
@@ -48,7 +49,7 @@
 									<td>${vo.name }</td>
 									<td>${vo.reqDate }</td>
 									<td><a
-										href="${pageContext.servletContext.contextPath }/guestbook?a=deleteform&no=${vo.no }">삭제</a></td>
+										href="${pageContext.servletContext.contextPath }/guestbook/delete/${vo.no }">삭제</a></td>
 								</tr>
 								<tr>
 									<td colspan="4">${fn:replace(vo.message, newline, "<br>") }

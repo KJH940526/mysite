@@ -13,7 +13,7 @@ import com.bitacademy.mysite.vo.UserVo;
 @Repository
 public class UserRepository {
 	
-	public UserVo findNo(Long userVoNo) {
+	public UserVo findByNo(Long userVoNo) {
 		System.out.println("findNo");
 		System.out.println("findNo userVoNo : " + userVoNo);
 		UserVo userVo = null;
@@ -129,91 +129,91 @@ public class UserRepository {
 		return userVo;
 	}
 	
-	public boolean update(UserVo userVo) {
-		System.out.println("update 입니다!");
-		System.out.println("update userVo : "+ userVo);
-		boolean result = false;
-
+	public int update(UserVo vo) {
+		int count = 0;
+		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
 			conn = getConnection();
-
-			// 3. SQL 준비
-			String sql = " update user set name=?, password=? , gender=? where no=?";
-			pstmt = conn.prepareStatement(sql);
-
-			// 4. 바인딩
-			pstmt.setString(1, userVo.getName());
-			pstmt.setString(2, userVo.getPassword());
-			pstmt.setString(3, userVo.getGender());
-			pstmt.setLong(4, userVo.getNo());
-			// now는 일단 셋을 하지말아봐!~!
-
-			// 5. sql문 실행
-			int count = pstmt.executeUpdate();
-
-			result = count == 1;
-
+			
+			if(null == vo.getPassword() || "".equals(vo.getPassword())) {
+				String sql =" update user set name=?, gender=? where no=?";
+				pstmt = conn.prepareStatement(sql);
+			
+				pstmt.setString(1, vo.getName());
+				pstmt.setString(2, vo.getGender());
+				pstmt.setLong(3, vo.getNo());
+			} else {
+				String sql =" update user set name=?, password=? , gender=? where no=?";
+				pstmt = conn.prepareStatement(sql);
+			
+				pstmt.setString(1, vo.getName());
+				pstmt.setString(2, vo.getPassword());
+				pstmt.setString(3, vo.getGender());
+				pstmt.setLong(4, vo.getNo());
+			}
+			
+			count = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
 		} finally {
 			try {
 				// 3. 자원정리
-				if (pstmt != null) {
+				if(pstmt != null) {
 					pstmt.close();
 				}
-				if (conn != null) {
+				if(conn != null) {
 					conn.close();
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-		}
-		return result;
-	};
+		}		
+		System.out.println("업데이트" + count);
+		return count;		
+	}
 	
-
-	public boolean insert(UserVo userVo) {
-		boolean result = false;
+	public int insert(UserVo userVo) {
+		int count = 0;
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
 			conn = getConnection();
-
+			
 			// 3. SQL 준비
-			String sql = " insert" + "   into user" + " values(null, ?, ?, ?, ?, now())";
+			String sql =
+					" insert" +
+					"   into user" +
+					" values (null, ?, ?, ?, ?, now())";
 			pstmt = conn.prepareStatement(sql);
-
+			
 			// 4. 바인딩
 			pstmt.setString(1, userVo.getName());
 			pstmt.setString(2, userVo.getEmail());
 			pstmt.setString(3, userVo.getPassword());
 			pstmt.setString(4, userVo.getGender());
-			// now는 일단 셋을 하지말아봐!~!
-
+			
 			// 5. sql문 실행
-			int count = pstmt.executeUpdate();
-
-			result = count == 1;
-
+			count = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
 		} finally {
 			try {
 				// 3. 자원정리
-				if (pstmt != null) {
+				if(pstmt != null) {
 					pstmt.close();
 				}
-				if (conn != null) {
+				if(conn != null) {
 					conn.close();
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-		}
-		return result;
+		}		
+		
+		return count;		
 	}
 
 	private Connection getConnection() throws SQLException {
