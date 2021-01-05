@@ -19,7 +19,11 @@ public class GuestbookService {
 	}
 
 	public void writeMessage(GuestbookVo vo) {
+		System.out.println("before----> : " +vo);
 		guestbookRepository.insert(vo);
+		System.out.println("after----> : " + vo);
+		//guestbook.xml에서 selectKey를 지정했기떄문에!! 아니면 null이 나옴!!
+		//https://yookeun.github.io/java/2014/07/11/mybatis-selectkey/
 	}
 
 	public void deleteMessage(GuestbookVo vo) {
