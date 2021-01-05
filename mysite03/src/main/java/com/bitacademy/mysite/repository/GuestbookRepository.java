@@ -1,22 +1,32 @@
 package com.bitacademy.mysite.repository;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.bitacademy.mysite.exception.GuestbookRepositoryException;
 import com.bitacademy.mysite.vo.GuestbookVo;
 
 
 @Repository
 public class GuestbookRepository {
 	
-	public List<GuestbookVo> findAll() {
+	@Autowired
+	private SqlSession sqlSeesion;
+	
+	@Autowired
+	private DataSource dataSource;
+	
+	public List<GuestbookVo> findAll() throws GuestbookRepositoryException{
 		List<GuestbookVo> list = new ArrayList<>();
 
 		Connection conn = null;
@@ -24,7 +34,7 @@ public class GuestbookRepository {
 		ResultSet rs = null;
 
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 			
 			String sql =
 					"   select no, name, date_format(reg_date, '%Y/%m/%d %H:%i:%s') as reg_date, message" +
@@ -50,7 +60,7 @@ public class GuestbookRepository {
 			}
 			
 		} catch (SQLException e) {
-			System.out.println("error:" + e);
+			throw new GuestbookRepositoryException(e.toString());
 		} finally {
 			try {
 				// 3. 자원정리
@@ -77,7 +87,7 @@ public class GuestbookRepository {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 			
 			// 3. SQL 준비
 			String sql =
@@ -126,7 +136,7 @@ public class GuestbookRepository {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 			
 			// 3. SQL 준비
 			String sql =
@@ -162,25 +172,5 @@ public class GuestbookRepository {
 		}		
 		
 		return result;
-	}
-	
-	
-	
-	
-
-	private Connection getConnection() throws SQLException {
-		Connection conn = null;
-		try {
-			// 1. JDBC Driver 로딩
-			Class.forName("org.mariadb.jdbc.Driver");
-
-			// 2. 연결하기
-			String url = "jdbc:mysql://192.168.0.114:3307/webdb?characterEncoding=utf8";
-			conn = DriverManager.getConnection(url, "webdb", "webdb");
-		} catch (ClassNotFoundException e) {
-			System.out.println("드라이버 로딩 실패:" + e);
-		}
-
-		return conn;
 	}
 }
