@@ -4,19 +4,15 @@ public class BoardVo {
 	private Long no;
 	private String title;
 	private String contents;
-	private String reqDate;
+	private String regDate;
 	private Long hit;
 	
 	private Long groupNo;
 	private int orderNo;
 	private int depth;
 	
-	//유저 테이블에서 조인해야함
-	private String userName;  
+	private String userName;
 	private Long userNo;
-	
-	
-	
 	public Long getNo() {
 		return no;
 	}
@@ -35,11 +31,11 @@ public class BoardVo {
 	public void setContents(String contents) {
 		this.contents = contents;
 	}
-	public String getReqDate() {
-		return reqDate;
+	public String getRegDate() {
+		return regDate;
 	}
-	public void setReqDate(String reqDate) {
-		this.reqDate = reqDate;
+	public void setRegDate(String regDate) {
+		this.regDate = regDate;
 	}
 	public Long getHit() {
 		return hit;
@@ -79,10 +75,10 @@ public class BoardVo {
 	}
 	@Override
 	public String toString() {
-		return "BoardVo [no=" + no + ", title=" + title + ", contents=" + contents + ", reqDate=" + reqDate + ", hit="
+		return "BoardVo [no=" + no + ", title=" + title + ", contents=" + contents + ", regDate=" + regDate + ", hit="
 				+ hit + ", groupNo=" + groupNo + ", orderNo=" + orderNo + ", depth=" + depth + ", userName=" + userName
 				+ ", userNo=" + userNo + "]";
 	}
 	
-
+	
 }

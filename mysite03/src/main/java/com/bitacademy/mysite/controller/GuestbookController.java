@@ -29,7 +29,7 @@ public class GuestbookController {
 	}
 	
 	@RequestMapping("add")
-	public String add(GuestbookVo vo) { //넘어오는 파라미터를 vo로 받는다!!
+	public String add(GuestbookVo vo) { //웹에서 넘어오는 파라미터를 vo로 받는다!!
 		guestbookService.writeMessage(vo);
 		//모델에 넘길 필요없음!!
 		return "redirect:/guestbook"; //데이터 입력이니깐 리다이렉트!!

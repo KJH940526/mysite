@@ -14,22 +14,18 @@ import com.bitacademy.mysite.vo.GuestbookVo;
 public class GuestbookRepository {
 	
 	@Autowired
-	private SqlSession sqlSeesion;
-	
-
+	private SqlSession sqlSession;
 	
 	public List<GuestbookVo> findAll() {
-		System.out.println(sqlSeesion.selectList("guestbook.findAll"));
-		return sqlSeesion.selectList("guestbook.findAll");
-	}
-	
-	public int insert(GuestbookVo vo) {
-		System.out.println(sqlSeesion.insert("guestbook.insert", vo));
-		return sqlSeesion.insert("guestbook.insert", vo);
+		return sqlSession.selectList("guestbook.findAll");
 	}
 	
 	public int delete(GuestbookVo vo) {
-		System.out.println(sqlSeesion.delete("guestbook.delete", vo));
-		return sqlSeesion.delete("guestbook.delete", vo);
+		return sqlSession.delete("guestbook.delete", vo);
 	}
-}
+	
+	public int insert(GuestbookVo vo) {
+		return sqlSession.insert("guestbook.insert", vo);
+	}
+	
+};
