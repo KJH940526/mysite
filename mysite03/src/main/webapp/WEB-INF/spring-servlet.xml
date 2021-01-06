@@ -33,6 +33,14 @@
 			<mvc:mapping path="/user/logout"/> <!-- get방식 하나만 있기떄문에 url을 유지했음!! -->
 			<bean class="com.bitacademy.security.LogoutInterceptor"/>
 		</mvc:interceptor>
+		
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/> <!-- 모든 요청에서 다 확인해야함!! -->
+			<mvc:exclude-mapping path="/assets/**"/> <!-- 정적자원은 제외해줌!! -->
+			<mvc:exclude-mapping path="/user/auth"/>
+			<mvc:exclude-mapping path="/user/logout"/>
+			<bean class="com.bitacademy.security.AuthInterceptor"/>
+		</mvc:interceptor>
 	</mvc:interceptors>
 
 	<!-- View Resolver 설정 -->

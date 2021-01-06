@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.bitacademy.mysite.service.BoardService;
 import com.bitacademy.mysite.vo.BoardVo;
 import com.bitacademy.mysite.vo.UserVo;
+import com.bitacademy.security.Auth;
 import com.bitacademy.web.util.WebUtil;
 
 @Controller
@@ -50,6 +51,7 @@ public class BoardController {
 		return "redirect:/board?p=" + page + "&kwd=" + WebUtil.encodeURL(keyword, "UTF-8");
 	}
 	
+
 	@RequestMapping(value="/modify/{no}")	
 	public String modify(HttpSession session, @PathVariable("no") Long no, Model model){
 		//접근제어
@@ -78,13 +80,15 @@ public class BoardController {
 				"&kwd=" + WebUtil.encodeURL(keyword, "UTF-8");
 	}
 
+	
+	@Auth
 	@RequestMapping(value="/write", method=RequestMethod.GET)	
 	public String write(HttpSession session){
-		//접근제어
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		if(authUser == null) {
-			return "redirect:/";
-		}
+//		//접근제어
+//		UserVo authUser = (UserVo)session.getAttribute("authUser");
+//		if(authUser == null) {
+//			return "redirect:/";
+//		}
 
 		return "board/write";
 	}
@@ -103,13 +107,15 @@ public class BoardController {
 		return	"redirect:/board?p=" + page + "&kwd=" + WebUtil.encodeURL(keyword, "UTF-8");
 	}
 
+	
+	@Auth
 	@RequestMapping(value="/reply/{no}")	
 	public String reply(HttpSession session, @PathVariable("no") Long no, Model model){
-		//접근제어
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		if(authUser == null) {
-			return "redirect:/";
-		}
+//		//접근제어
+//		UserVo authUser = (UserVo)session.getAttribute("authUser");
+//		if(authUser == null) {
+//			return "redirect:/";
+//		}
 
 		BoardVo boardVo = boardService.getContents(no);
 		boardVo.setOrderNo(boardVo.getOrderNo() + 1);

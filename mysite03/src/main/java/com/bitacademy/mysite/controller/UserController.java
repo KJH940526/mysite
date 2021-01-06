@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.bitacademy.mysite.service.UserService;
 import com.bitacademy.mysite.vo.UserVo;
+import com.bitacademy.security.Auth;
+import com.bitacademy.security.Role;
+
 
 @Controller
 @RequestMapping("/user")
@@ -75,6 +78,7 @@ public class UserController {
 	}
 	
 	//업데이트 폼
+	@Auth
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
 	public String update(HttpSession session, Model model) {
 		// ACL 접근제어!!  //인증되었을때만 들어와야해서!!
@@ -90,6 +94,7 @@ public class UserController {
 		return "user/update";
 	}
 	
+	
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public String update(HttpSession session, UserVo userVo) { //파라미터로 받은애를 써야함!
 		// ACL 접근제어!!  //인증되었을때만 들어와야해서!!
@@ -97,7 +102,7 @@ public class UserController {
 		if(authUser == null) {
 			return "redirect:/";
 		}
-
+		// 지금은 authuser에서 꺼내서 써야하기 떄문에 불가능!!
 		Long no = authUser.getNo();
 		userVo.setNo(no);  // no를 셋팅해야함!!
 		

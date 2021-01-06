@@ -6,7 +6,7 @@
 		<![CDATA[
 			insert 
 				into user 
-			values (null, #{name }, #{email }, #{password }, #{gender }, now())
+			values (null, #{name }, #{email }, #{password }, #{gender }, 'USER', now())
 		]]>												<!-- 앞에 쿼리가 끝나면!! -->
 		<selectKey keyProperty="no" resultType="long" order="AFTER">
 			<![CDATA[
@@ -23,8 +23,7 @@
 		]]>
 	</select>
 
-	<select id="findByEmail" parameterType="string"
-		resultType="uservo">
+	<select id="findByEmail" parameterType="string" resultType="uservo">
 		<![CDATA[
 			select no, name, email, gender
 				from user
@@ -35,19 +34,17 @@
 
 
 	<!-- 파라미터 맵핑도 하고 셀렉트니깐!! result타입도 정해줘야한다!! -->
-	<select id="findByEmailAndPassword" parameterType="uservo"
-		resultType="uservo">
+	<select id="findByEmailAndPassword" parameterType="uservo" resultType="uservo">
 		<![CDATA[
-			select no, name
+			select no, name, role
 				from user
 			where email=#{email } and password=#{password }
 		]]>
 	</select>
 
-	<select id="findByEmailAndPassword2" parameterType="map"
-		resultType="uservo">
+	<select id="findByEmailAndPassword2" parameterType="map" resultType="uservo">
 		<![CDATA[
-			select no, name
+			select no, name, role
 				from user
 			where email=#{e } and password=#{p }
 		]]>
