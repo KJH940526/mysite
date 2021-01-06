@@ -1,6 +1,5 @@
 package com.bitacademy.mysite.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.bitacademy.mysite.repository.GuestbookRepository;
 import com.bitacademy.mysite.service.GuestbookService;
 import com.bitacademy.mysite.vo.GuestbookVo;
 
@@ -41,6 +39,13 @@ public class GuestbookController {
 		model.addAttribute("no", no); //${no } 때문에 필요!!
 		return "guestbook/delete"; 
 	}
+	
+//	//딜리트폼!! get으로 넘어가는!!
+//	@RequestMapping(value = "/delete/{no}", method = RequestMethod.GET)
+//	public String delete(@PathVariable("no") Long no) { //파라미터 no를 받음!!
+//		// pathVariable이 no로 넘겨주는듯? 따라서  model이 없이도 jsp에서 ${no }가 가능했음!
+//		return "guestbook/delete"; 
+//	}
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public String delete(GuestbookVo vo) {
