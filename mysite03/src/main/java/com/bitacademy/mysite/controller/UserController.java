@@ -38,36 +38,36 @@ public class UserController {
 		return "user/login";
 	}
 	
-	// modelattribute는 userVo라는 이름으로 자동으로 넣어줌
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(HttpSession session, @ModelAttribute UserVo userVo) { //값을 받아서 넣어야해서!!
-		UserVo authUser = userService.getUser(userVo);	
-		System.out.println(authUser); //비밀번호가 틀리면 null이 나옴!!
-		if(authUser == null) {
-			return "user/login";
-		}
-		
-		// 인증처리!!
-		session.setAttribute("authUser", authUser);
-		return "redirect:/";
-	}
+//	// modelattribute는 userVo라는 이름으로 자동으로 넣어줌
+//	@RequestMapping(value = "/login", method = RequestMethod.POST)
+//	public String login(HttpSession session, @ModelAttribute UserVo userVo) { //값을 받아서 넣어야해서!!
+//		UserVo authUser = userService.getUser(userVo);	
+//		System.out.println(authUser); //비밀번호가 틀리면 null이 나옴!!
+//		if(authUser == null) {
+//			return "user/login";
+//		}
+//		
+//		// 인증처리!!
+//		session.setAttribute("authUser", authUser);
+//		return "redirect:/";
+//	}
 	
-	//로그아웃
-	@RequestMapping(value = "/logout")
-	public String logout(HttpSession session) { 
-		// ACL 접근제어!!  //인증되었을때만 들어와야해서!!
-		UserVo authUser = (UserVo) session.getAttribute("authUser");
-		if(authUser == null) {
-			return "redirect:/";
-		}
-		
-		// 로그아웃처리
-		session.removeAttribute("authUser");
-		session.invalidate();
-		
-		return "redirect:/";
-	}
-	
+//	//로그아웃
+//	@RequestMapping(value = "/logout")
+//	public String logout(HttpSession session) { 
+//		// ACL 접근제어!!  //인증되었을때만 들어와야해서!!
+//		UserVo authUser = (UserVo) session.getAttribute("authUser");
+//		if(authUser == null) {
+//			return "redirect:/";
+//		}
+//		
+//		// 로그아웃처리
+//		session.removeAttribute("authUser");
+//		session.invalidate();
+//		
+//		return "redirect:/";
+//	}
+//	
 	@RequestMapping("/joinsuccess")
 	public String joinSuccess() {
 		System.out.println("조인 석세스");

@@ -19,9 +19,19 @@
 	
 	<!--  Interceptors -->
 	<mvc:interceptors>
+	<!-- 
 		<mvc:interceptor>
 			<mvc:mapping path="/board/**"/>
 			<bean class="com.bitacademy.mysite.interceptor.MyInterceptor02" />
+		</mvc:interceptor>
+	 -->
+		<mvc:interceptor>
+			<mvc:mapping path="/user/auth"/> <!-- join.jsp에서 주소를 바꿈!! get인지 post인지 확인 불가능해서!! -->
+			<bean class="com.bitacademy.security.LoginInterceptor"/>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/user/logout"/> <!-- get방식 하나만 있기떄문에 url을 유지했음!! -->
+			<bean class="com.bitacademy.security.LogoutInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>
 
