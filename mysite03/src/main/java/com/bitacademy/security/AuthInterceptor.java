@@ -65,9 +65,11 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 			return true;
 		}
 		
-		// 9. @Auth의 role이 "ADMIN"이 아닌 경우!
+		// 9. @Auth의 role이 "ADMIN"인 경우!!
+		System.out.println("9번 auth : "+auth);
+		System.out.println("9번 role : "+role);
 		System.out.println("------------------- 9번" + authUser.getRole());
-		if(!authUser.getRole().equals("ADMIN")) {
+		if(!authUser.getRole().equals(role)) {
 			System.out.println("---------9-1번" + role);
 			response.sendRedirect(request.getContextPath() + "/");
 			return false;
