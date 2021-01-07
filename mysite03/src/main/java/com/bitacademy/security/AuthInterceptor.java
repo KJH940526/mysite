@@ -32,11 +32,12 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		//4. Method에 @Auth가 안 붙어 있는 경우, Type(Class)에 붙어 있는지 확인한다.(과제)
 		 if(auth == null){
 			 auth = handlerMethod.getMethod().getDeclaringClass().getAnnotation(Auth.class);			 
-			 System.out.println("c.b.s.AuthInterceptor2 ==> "+auth);
+			 System.out.println("c.b.s.AuthInterceptor2 ==> "+auth); //admin
 		 }
 		
 		// 5. Method나 Type(Class)에 @Auth가 없는경우
 		if(auth == null) {
+			System.out.println("c.b.s.AuthInterceptor3 ==> "+auth);  //방명록
 			return true;
 		}
 		
@@ -48,6 +49,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		}
 		
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		System.out.println("----------c.b.s.AuthInterceptor authUser-------6번==>" + authUser);
 		if(authUser == null) {
 			response.sendRedirect(request.getContextPath() + "/user/login");
 			return false;
@@ -56,14 +58,24 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		// 과제!
 		// 7. 권한(Authorization) 체크를 위해서 @Auth의 role을 가져오기("USER","ADMIN")!!
 		String role = auth.value();
-		System.out.println("c.b.s.AuthInterceptor ==> " + role);
+		System.out.println("-----------c.b.s.AuthInterceptor role--------7번==> " + role);
 		
 		// 8. @Auth의 role이 "USER"인 경우에는 authUser의 role이 "USER", "ADMIN" 상관없음
 		if("USER".equals(role)) {
 			return true;
 		}
 		
+		// 9. @Auth의 role이 "ADMIN"이 아닌 경우!
+		System.out.println("------------------- 9번" + authUser.getRole());
+		if(!authUser.getRole().equals("ADMIN")) {
+			System.out.println("---------9-1번" + role);
+			response.sendRedirect(request.getContextPath() + "/");
+			return false;
+		}
+		
+		
 		return true;
 	}
 
 }
+
