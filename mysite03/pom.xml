@@ -30,6 +30,13 @@
 			   </exclusion>
 			</exclusions>
 		</dependency>
+		
+		<!-- spring Aspect -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-aspects</artifactId>
+		    <version>${org.springframework-version}</version>
+		</dependency>
 
 		<!-- Spring Web -->
 		<dependency>
