@@ -1,8 +1,12 @@
 package com.bitacademy.mysite.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -20,14 +24,24 @@ public class UserController {
 	
 	//조인 폼
 	@RequestMapping(value="/join", method=RequestMethod.GET)
-	public String join() {
+	public String join(@ModelAttribute UserVo userVo) { //spring form에서 모델을 받기떄문!
 		return "user/join";
 	}
 	
 	@RequestMapping(value="/join", method=RequestMethod.POST)
-	public String join(UserVo vo) { //값을 받아서 넣어야해서!!
-		System.out.println(vo);
-		userService.join(vo);
+	public String join(@ModelAttribute @Valid UserVo userVo, BindingResult result, Model model) { //값을 받아서 넣어야해서!!
+		if(result.hasErrors()) {
+//			List<ObjectError> list = result.getAllErrors();
+//			for(ObjectError error : list) {
+//				System.out.println(error);
+//			}
+			
+			model.addAttribute("userVO", userVo); //@ModelAttribute는 이걸 대신해줌
+			model.addAllAttributes(result.getModel());			
+			return "user/join";
+		}
+		System.out.println(userVo);
+		userService.join(userVo);
 		return "redirect:/user/joinsuccess";
 	}
 	
