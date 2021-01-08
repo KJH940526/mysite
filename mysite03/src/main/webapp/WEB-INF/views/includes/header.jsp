@@ -16,6 +16,9 @@
 				</li>
 			</c:when>
 			<c:otherwise>
+				<c:if test='${authUser.role == "ADMIN" }'>
+				<li><a href="${pageContext.request.contextPath }/admin">관리자페이지</a>
+				</c:if>
 				<li><a href="${pageContext.request.contextPath }/user/update">회원정보수정</a>
 				</li>
 				<li><a href="${pageContext.request.contextPath }/user/logout">로그아웃</a>
