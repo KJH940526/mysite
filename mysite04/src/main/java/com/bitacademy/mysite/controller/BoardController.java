@@ -29,7 +29,7 @@ public class BoardController {
 		Map<String, Object> map = boardService.getContentsList(page, keyword);
 		model.addAttribute("map", map);
 		
-		return "board/index";
+		return "board/index"; // /board/index 처럼 붙이는게 좋음!
 	}
 	
 	@RequestMapping("/view/{no}")
