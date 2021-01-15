@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="guestbook"> <!-- 유저쪽에 findAll이 있어도 nameSpace로 구분!! -->
+
+	<select id="count" resultType="integer">
+		<![CDATA[
+			select count(*) from guestbook
+		]]>
+	</select>
+
+	<select id="findAll" resultType="com.bitacademy.mysite.vo.GuestbookVo">
+		<!-- CDATA는 컨텐츠라는것을 알려준다! 쓰는 이유는? where 절에서 <>를 태그로 인식!! 이럴떄 사용! -->
+		<![CDATA[
+		select no, name, date_format(reg_date, '%Y/%m/%d %H:%i:%s') as regDate, message
+			from guestbook
+		order by reg_date desc
+		]]>
+	</select> <!-- select는 result를 담아야함!! -->
+				<!-- guestbookvo의 필드이름으로 써야함! 내부에서 겟터셋터로 설정해줌-->
+					<!--  이름이 다르면 rsultmap을 사용하던가 db에서 as로 별칭을 필드값이랑 독같이 이름을 세팅하면 편하다! -->
+
+	<!-- 페이징 처리하는거랑 비슷! -->
+	<select id="findAllByNo" parameterType="long" resultType="guestbookvo">
+		<![CDATA[
+		select no, name, date_format(reg_date, '%Y/%m/%d %H:%i:%s') as regDate, message
+			from guestbook
+		]]>
+		<if test='_parameter > 0'>
+			where no > #{_parameter }
+		</if>
+		<![CDATA[
+		order by reg_date desc
+			limte 0,3
+		]]>
+	</select> 
+
+	<!-- Mapping을 해줘야함! --> <!-- 마이바티스 아래에있는 configuration에서 별칭 지정! -->
+	<insert id="insert" parameterType="guestbookvo"> 
+		<![CDATA[
+			insert
+				into guestbook
+			values(null, #{name }, #{password }, #{message }, now()) 
+		]]>			
+		<selectKey keyProperty="no" resultType="long" order="AFTER">
+			<![CDATA[
+				select last_insert_id()
+			]]>
+		</selectKey>
+	</insert>
+	
+	<insert id="delete" parameterType="guestbookvo"> 
+		<![CDATA[
+			delete
+				from guestbook
+			where no = #{no }
+			and password = #{password }
+		]]>	
+	</insert>
+
+</mapper>
