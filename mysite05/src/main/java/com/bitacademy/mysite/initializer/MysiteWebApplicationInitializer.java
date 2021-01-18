@@ -54,6 +54,7 @@ public class MysiteWebApplicationInitializer extends AbstractAnnotationConfigDis
 	@Override
 	protected Filter[] getServletFilters() {
 		//인코딩 설정
+		System.out.println("Filter");
 		return new Filter[] { new CharacterEncodingFilter("UTF-8", true) };
 	}
 	
