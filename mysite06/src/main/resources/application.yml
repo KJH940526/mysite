@@ -1,0 +1,61 @@
+# Spring
+spring:
+
+   # mvc
+   mvc:
+      view:
+         prefix: /WEB-INF/views/
+         suffix: .jsp
+
+   # http
+   http:
+      encoding:
+         charset: utf-8
+         enabled: true
+         forced: true
+         forced-request: true
+         forced-response: true
+
+  #datasource
+   datasource:
+      driver-class-name: org.mariadb.jdbc.Driver
+      url: jdbc:mysql://192.168.0.114:3307/jblog?characterEncoding=utf8
+      username: jblog
+      spassword: jblog
+      initialSize: 10
+      maxActive: 100
+      
+   # devtools
+   devtools:
+      livereload:
+         enabled: true
+         
+   # multipart
+   servlet:
+      multipart:
+         enabled: true
+         max-file-size: 50MB
+         max-request-size: 50MB
+
+# Internationalization(Message Source)
+   message:
+      always-use-message-format: true
+      basename: messages/messages_ko
+      endcoding: utf-8
+
+
+# AOP(@EnableAspectJAutoProxy)
+   aop:
+      auto: true
+      proxy-target-class: true
+      
+      
+# mybatis
+mybatis:
+   config-location: classpath:mybatis/configuration.xml     
+   
+# server
+server:
+   port: 8088
+   servlet :  
+      context-path: mysite06
