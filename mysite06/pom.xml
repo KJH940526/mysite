@@ -95,7 +95,7 @@
 	</dependencies>
 	
 	<build>
-		<finalName>${artifactId}</finalName>
+		<finalName>mysite06</finalName>
 		<sourceDirectory>/src/main/java</sourceDirectory>
 		<resources>
 			<resource>
@@ -125,7 +125,7 @@
 				<artifactId>tomcat-maven-plugin</artifactId>
 				<configuration>
 					<url>http://192.168.0.114:8080/manager/text</url>
-					<path>/${artifactId}</path>
+					<path>/mysite06</path>
 					<username>admin</username>
 					<password>manager</password>
 				</configuration>
