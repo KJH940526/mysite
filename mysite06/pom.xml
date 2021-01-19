@@ -95,8 +95,8 @@
 	</dependencies>
 	
 	<build>
-		<finalName>mysite06</finalName>
-		<sourceDirectory>/src/main/java</sourceDirectory>
+		<finalName>${artifactId}</finalName>
+		<sourceDirectory>src/main/java</sourceDirectory>
 		<resources>
 			<resource>
 				<directory>${project.basedir}/src/main/resources</directory>
@@ -125,7 +125,7 @@
 				<artifactId>tomcat-maven-plugin</artifactId>
 				<configuration>
 					<url>http://192.168.0.114:8080/manager/text</url>
-					<path>/mysite06</path>
+					<path>/${artifactId}</path>
 					<username>admin</username>
 					<password>manager</password>
 				</configuration>
